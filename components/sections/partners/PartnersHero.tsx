@@ -1,35 +1,51 @@
+"use client";
+
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 export default function PartnersHero() {
+    const t = useTranslations('PartnersHero');
+
     return (
-        <section className="w-full relative overflow-hidden rounded-3xl min-h-[480px] flex items-center justify-center p-8 border border-white/5 mt-8">
-            {/* Фонове зображення */}
+        <section className="w-full relative overflow-hidden rounded-[3rem] min-h-[550px] flex items-center justify-center p-8 border border-white/5 mt-8 bg-[#0A0A15]">
+            {/* Фонове зображення з покращеним оверлеєм */}
             <div className="absolute inset-0 z-0">
                 <Image
-                    src="https://via.placeholder.com/1920x800"
+                    src="https://placehold.co/1920x800/0A0A15/6C63FF/png?text=AI+Industry+Network"
                     alt="Technology grid background"
                     fill
-                    className="object-cover opacity-30 grayscale"
+                    unoptimized
+                    className="object-cover opacity-20 grayscale"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0F0F1A]/95 to-primary/20"></div>
+                {/* Радіальний та лінійний градієнти для глибини */}
+                <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A15]/60 via-[#0A0A15]/90 to-[#0A0A15]"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(108,99,255,0.15),transparent_70%)]"></div>
             </div>
 
-            {/* Декоративне світіння */}
-            <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(108,99,255,0.2),transparent_50%)] z-0"></div>
+            {/* Декоративні елементи світіння */}
+            <div className="glow-sphere -top-20 -right-20 opacity-30 pointer-events-none"></div>
+            <div className="glow-sphere -bottom-20 -left-20 opacity-20 pointer-events-none"></div>
 
-            <div className="relative z-10 flex flex-col items-center text-center max-w-3xl gap-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs tracking-widest uppercase font-bold mb-2 shadow-[0_0_20px_rgba(108,99,255,0.15)]">
-                    <span className="material-symbols-outlined text-[16px]">handshake</span>
-                    Industry Synergy
+            <div className="relative z-10 flex flex-col items-center text-center max-w-4xl gap-8">
+                {/* Бейдж */}
+                <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] tracking-[0.3em] uppercase font-bold mb-4 shadow-[0_0_30px_rgba(108,99,255,0.1)] animate-in fade-in slide-in-from-bottom-2 duration-700">
+                    <span className="material-symbols-outlined text-[18px]">handshake</span>
+                    {t('badge')}
                 </div>
 
-                <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight tracking-tight text-white">
-                    Партнери та <br />співпраця
+                {/* Головний заголовок */}
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tighter text-white animate-in fade-in slide-in-from-bottom-4 duration-1000">
+                    {t('title1')} <br />
+                    <span className="gradient-text">{t('title2')}</span>
                 </h1>
 
-                <p className="text-lg md:text-xl text-gray-400 font-light max-w-2xl leading-relaxed">
-                    Empowering the next generation of tech leaders through strategic industrial synergy and unparalleled career opportunities at Lviv Polytechnic.
+                {/* Опис */}
+                <p className="text-lg md:text-2xl text-gray-400 font-light max-w-3xl leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
+                    {t('description')}
                 </p>
+
+                {/* Декоративна лінія знизу */}
+                <div className="w-24 h-1 gradient-bg rounded-full mt-4 opacity-50"></div>
             </div>
         </section>
     );

@@ -1,31 +1,77 @@
-const rndLabs = [
-    { icon: 'smart_toy', title: 'Robotics Lab', desc: 'Розробка автономних систем, маніпуляторів та дронів на базі AI.' },
-    { icon: 'psychology', title: 'AI Lab', desc: 'Глибоке навчання, нейронні мережі та системи прийняття рішень.' },
-    { icon: 'database', title: 'Data Science', desc: 'Аналіз великих даних, предиктивна аналітика та візуалізація.' },
-    { icon: 'language', title: 'NLP Unit', desc: 'Обробка природної мови, чат-боти та великі мовні моделі.' },
-];
+"use client";
+
+import Link from 'next/link';
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function RnD() {
+    const t = useTranslations('RnD');
+    const locale = useLocale();
+
+    // Залишаємо іконки в масиві, а тексти тягнемо з перекладу
+    const icons = ['smart_toy', 'psychology', 'database', 'language'];
+
     return (
-        <section className="section-spacing relative overflow-hidden">
-            <div className="glow-sphere bottom-0 left-1/2 -translate-x-1/2 opacity-30"></div>
+        <section className="py-24 bg-[#0A0A15] relative overflow-hidden rounded-[3rem] border border-white/5 mx-4 md:mx-8 mb-20 shadow-2xl">
+            {/* Декоративні фонові світіння */}
+            <div className="glow-sphere bottom-0 left-1/2 -translate-x-1/2 opacity-20 pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle_at_top_right,rgba(108,99,255,0.05),transparent_70%)] pointer-events-none"></div>
+
             <div className="container mx-auto px-8 relative z-10">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-                    <div className="max-w-xl">
-                        <span className="text-primary font-bold tracking-widest uppercase text-xs mb-6 block">Інновації</span>
-                        <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">R&D HUB</h2>
-                        <p className="text-gray-400 text-lg font-light leading-relaxed">Центр практичних розробок, де студенти працюють над реальними проєктами у співпраці з бізнесом.</p>
+                {/* Шапка секції */}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 gap-10">
+                    <div className="max-w-2xl">
+                        <span className="text-primary font-bold tracking-[0.3em] uppercase text-[10px] mb-6 block animate-in fade-in slide-in-from-bottom-2 duration-700">
+                            {t('badge')}
+                        </span>
+                        <h2 className="text-5xl md:text-7xl font-bold text-white mb-8 tracking-tighter leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700">
+                            {t('title')}
+                        </h2>
+                        <p className="text-gray-400 text-lg md:text-xl font-light leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
+                            {t('description')}
+                        </p>
                     </div>
-                    <button className="px-10 py-4 border border-white/20 hover:bg-white/5 transition-colors uppercase text-[10px] tracking-[0.25em] font-bold text-white">Усі лабораторії</button>
+
+                    {/* Кнопка переходу */}
+                    <div className="animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
+                        <Link
+                            href={`/${locale}/research-units`}
+                            className="inline-flex px-10 py-5 border border-white/10 bg-white/5 backdrop-blur-md text-white font-bold rounded-[1.25rem] hover:bg-white/10 hover:border-white/20 hover:-translate-y-1 transition-all uppercase tracking-[0.2em] text-[10px] whitespace-nowrap"
+                        >
+                            {t('button')}
+                        </Link>
+                    </div>
                 </div>
+
+                {/* Сітка лабораторій */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {rndLabs.map((lab, i) => (
-                        <div key={i} className="glass-card p-10 group hover:-translate-y-3 transition-all duration-500 border-white/5">
-                            <div className="w-14 h-14 bg-primary/5 rounded-xl flex items-center justify-center mb-8 border border-primary/20">
-                                <span className="material-symbols-outlined text-3xl text-primary">{lab.icon}</span>
+                    {icons.map((icon, i) => (
+                        <div
+                            key={i}
+                            className="group relative glass-card p-10 rounded-[2.5rem] hover:-translate-y-3 transition-all duration-500 border-white/5 bg-[#0F0F1A]/40 overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700"
+                            style={{ animationDelay: `${i * 100}ms` }}
+                        >
+                            {/* Градієнт при наведенні */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                            {/* Іконка */}
+                            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-8 border border-primary/20 group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-lg shadow-primary/5 relative z-10">
+                                <span className="material-symbols-outlined text-3xl">{icon}</span>
                             </div>
-                            <h4 className="text-xl font-bold text-white mb-4">{lab.title}</h4>
-                            <p className="text-sm text-gray-500 leading-relaxed font-light">{lab.desc}</p>
+
+                            {/* Текст */}
+                            <div className="relative z-10 flex flex-col flex-grow">
+                                <h4 className="text-2xl font-bold text-white mb-4 tracking-tight group-hover:text-primary transition-colors duration-300">
+                                    {t(`labs.${i}.title`)}
+                                </h4>
+                                <p className="text-sm text-gray-400 leading-relaxed font-light">
+                                    {t(`labs.${i}.desc`)}
+                                </p>
+                            </div>
+
+                            {/* Стрілка-індикатор */}
+                            <div className="mt-8 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-[-10px] group-hover:translate-x-0 relative z-10">
+                                <span className="material-symbols-outlined text-primary text-2xl">arrow_right_alt</span>
+                            </div>
                         </div>
                     ))}
                 </div>

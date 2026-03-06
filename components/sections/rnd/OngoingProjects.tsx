@@ -1,89 +1,74 @@
-import Image from 'next/image';
-
-const projects = [
-    {
-        img: "https://via.placeholder.com/800x600",
-        tag: "AI Lab",
-        hosted: true,
-        title: "Horizon Europe: AI-Trust",
-        desc: "Developing explainable AI models for critical decision-making systems in autonomous vehicles."
-    },
-    {
-        img: "https://via.placeholder.com/800x600",
-        tag: "Robotics Lab",
-        hosted: false,
-        title: "Erasmus+ SmartAgri",
-        desc: "Automated drone swarms for precision agriculture and crop health monitoring."
-    },
-    {
-        img: "https://via.placeholder.com/800x600",
-        tag: "Data Science",
-        hosted: true,
-        title: "Global Health Predictor",
-        desc: "Predictive modeling of epidemiological spread using multi-modal global datasets."
-    }
-];
+"use client";
+import Link from 'next/link';
+import { useTranslations, useLocale } from 'next-intl';
+import { allProjects } from '@/data/allProjects'; // Імпортуємо наш оновлений масив
 
 export default function OngoingProjects() {
-    return (
-        <section className="py-24" id="projects">
-            <div className="container mx-auto px-8">
+    const t = useTranslations('RndPage');
+    const locale = useLocale();
 
-                {/* Заголовок та фільтри */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
-                    <div>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Ongoing Projects</h2>
-                        <p className="text-lg text-gray-400 max-w-2xl font-light">Explore the innovative solutions developed by our teams.</p>
-                    </div>
+    const renderCategory = (categoryKey: string) => {
+        const filtered = allProjects.filter(p => p.cat === categoryKey);
 
-                    <div className="flex overflow-x-auto pb-2 space-x-2 border-b border-white/10 hide-scrollbar">
-                        <button className="px-6 py-3 text-sm font-bold text-primary border-b-2 border-primary whitespace-nowrap transition-colors">International</button>
-                        <button className="px-6 py-3 text-sm font-medium text-gray-400 hover:text-white whitespace-nowrap transition-colors">National</button>
-                        <button className="px-6 py-3 text-sm font-medium text-gray-400 hover:text-white whitespace-nowrap transition-colors">Industrial</button>
-                        <button className="px-6 py-3 text-sm font-medium text-gray-400 hover:text-white whitespace-nowrap transition-colors">Student</button>
-                    </div>
+        return (
+            <div className="mb-24 px-8">
+                <div className="flex items-center gap-4 mb-10">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+                        {t(`categories.${categoryKey}`)}
+                    </h2>
+                    <div className="flex-grow h-[1px] bg-gradient-to-r from-primary/30 to-transparent"></div>
                 </div>
 
-                {/* Сітка проєктів */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {projects.map((proj, i) => (
-                        <div key={i} className="glass-card rounded-3xl overflow-hidden flex flex-col group border-white/5">
-                            <div className="relative overflow-hidden h-56 bg-[#0F0F1A]">
-                                <Image
-                                    src={proj.img}
-                                    alt={proj.title}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F1A] to-transparent opacity-80"></div>
-                            </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filtered.map((proj) => (
+                        <div key={proj.slug} className="group relative p-8 rounded-[2.5rem] border border-white/5 bg-[#0F0F1A]/30 transition-all duration-500 hover:border-primary/40 hover:-translate-y-2 flex flex-col h-full overflow-hidden shadow-2xl shadow-black/20">
 
-                            <div className="p-8 flex-grow flex flex-col relative z-10 -mt-6">
-                                <div className="flex justify-between items-center mb-6">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-primary/10 text-primary border border-primary/20">
-                    {proj.tag}
-                  </span>
-
-                                    {proj.hosted && (
-                                        <span className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-widest uppercase text-[#34D399] bg-[#34D399]/10 px-3 py-1 rounded-full border border-[#34D399]/20">
-                      <span className="material-symbols-outlined text-[14px]">cloud_done</span> Hosted on AIS
-                    </span>
-                                    )}
+                            {/* Іконка та партнер */}
+                            <div className="flex items-start justify-between mb-8">
+                                <div className="w-14 h-14 rounded-2xl bg-primary/5 border border-primary/10 flex items-center justify-center text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                                    <span className="material-symbols-outlined text-3xl">{proj.icon}</span>
                                 </div>
-
-                                <h3 className="text-2xl font-bold text-white mb-3">{proj.title}</h3>
-                                <p className="text-gray-400 text-sm mb-8 flex-grow leading-relaxed font-light">
-                                    {proj.desc}
-                                </p>
-
-                                <button className="w-full py-4 px-6 gradient-bg text-white rounded-xl font-bold text-[10px] uppercase tracking-[0.2em] shadow-[0_4px_14px_rgba(108,99,255,0.2)] hover:shadow-[0_8px_25px_rgba(108,99,255,0.4)] transition-all duration-300">
-                                    Join Project
-                                </button>
+                                <div className="text-[10px] font-bold text-primary/60 uppercase tracking-[0.2em] text-right max-w-[120px]">
+                                    {proj.partner}
+                                </div>
                             </div>
+
+                            {/* Назва */}
+                            <h3 className="text-xl font-bold text-white mb-6 leading-snug group-hover:text-primary transition-colors duration-300">
+                                {proj.title}
+                            </h3>
+
+                            {/* Керівник та кнопка */}
+                            <div className="mt-auto">
+                                <div className="text-[9px] text-gray-500 uppercase tracking-widest mb-1">{t('project.lead')}</div>
+                                <div className="text-xs text-gray-400 font-light mb-8">{proj.leads}</div>
+
+                                {/* ОНОВЛЕНА КНОПКА: Елегантна і функціональна */}
+                                <Link
+                                    href={`/${locale}/projects/${proj.slug}`}
+                                    className="inline-flex items-center gap-3 py-3 px-6 rounded-xl border border-white/10 text-white text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-primary hover:border-primary hover:shadow-[0_0_20px_rgba(108,99,255,0.3)] transition-all duration-300 group/btn"
+                                >
+                                    {t('project.more')}
+                                    <span className="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                                </Link>
+                            </div>
+
+                            {/* Декоративний градієнтний промінь знизу */}
+                            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         </div>
                     ))}
                 </div>
+            </div>
+        );
+    };
 
+    return (
+        // Додано rounded та px-8 як ви просили раніше для м'якості
+        <section className="py-20 bg-[#0A0A15] rounded-[3rem] border border-white/5 mx-4 md:mx-8 mb-20" id="projects">
+            <div className="container mx-auto">
+                {renderCategory('international')}
+                {renderCategory('national')}
+                {renderCategory('industrial')}
             </div>
         </section>
     );

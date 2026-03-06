@@ -1,40 +1,60 @@
-export default function ProjectDetails() {
+import { useTranslations } from 'next-intl';
+
+interface ProjectDetailsProps {
+    data?: {
+        challenge: string;
+        solution: string;
+        results: string;
+    };
+}
+
+export default function ProjectDetails({ data }: ProjectDetailsProps) {
+    const t = useTranslations('ProjectDetails');
+
+    // Якщо даних немає, не рендеримо секцію
+    if (!data) return null;
+
     return (
         <section className="py-16 lg:py-24 bg-[#0A0A15] relative border-t border-white/5">
             <div className="container mx-auto px-8 relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Project Details</h2>
-                    <p className="text-lg text-gray-400 max-w-2xl mx-auto font-light">Understanding the core objectives and the impact of the AI-Trust initiative.</p>
+                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                        {t('title')}
+                    </h2>
+                    <div className="w-20 h-1 gradient-bg mx-auto rounded-full opacity-50"></div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="glass-card rounded-2xl p-8 border-white/5">
-                        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6 text-primary border border-primary/20">
-                            <span className="material-symbols-outlined text-2xl">warning</span>
+                    {/* The Challenge */}
+                    <div className="glass-card rounded-[2rem] p-10 border-white/5 bg-[#0F0F1A]/40 transition-all hover:border-red-500/20 group">
+                        <div className="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center mb-8 text-red-500 border border-red-500/20 group-hover:bg-red-500 group-hover:text-white transition-all">
+                            <span className="material-symbols-outlined text-3xl">warning</span>
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-4">The Challenge</h3>
+                        <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">{t('challenge')}</h3>
                         <p className="text-gray-400 leading-relaxed text-sm font-light">
-                            Current autonomous driving systems rely on deep neural networks acting as "black boxes". This lack of transparency prevents regulatory approval and limits public trust in critical situations where understanding the AI's decision is paramount.
+                            {data.challenge}
                         </p>
                     </div>
 
-                    <div className="glass-card rounded-2xl p-8 border-t-2 border-t-primary shadow-[0_-10px_30px_-15px_rgba(108,99,255,0.3)] bg-[#161B26]/60">
-                        <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-6 text-primary border border-primary/30">
-                            <span className="material-symbols-outlined text-2xl">lightbulb</span>
+                    {/* Our Solution */}
+                    <div className="glass-card rounded-[2rem] p-10 border-t-2 border-t-primary shadow-[0_-10px_40px_-15px_rgba(108,99,255,0.3)] bg-[#161B26]/80 scale-105 z-20">
+                        <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center mb-8 text-primary border border-primary/30">
+                            <span className="material-symbols-outlined text-3xl">lightbulb</span>
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-4">Our Solution</h3>
+                        <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">{t('solution')}</h3>
                         <p className="text-gray-400 leading-relaxed text-sm font-light">
-                            We developed a novel neuro-symbolic architecture that combines deep learning perception with rule-based logical reasoning. This hybrid approach allows the system to generate natural language explanations for its driving decisions in real-time.
+                            {data.solution}
                         </p>
                     </div>
 
-                    <div className="glass-card rounded-2xl p-8 border-white/5">
-                        <div className="w-12 h-12 rounded-xl bg-[#80E9D4]/10 flex items-center justify-center mb-6 text-[#80E9D4] border border-[#80E9D4]/20">
-                            <span className="material-symbols-outlined text-2xl">trending_up</span>
+                    {/* The Results */}
+                    <div className="glass-card rounded-[2rem] p-10 border-white/5 bg-[#0F0F1A]/40 transition-all hover:border-[#80E9D4]/20 group">
+                        <div className="w-14 h-14 rounded-2xl bg-[#80E9D4]/10 flex items-center justify-center mb-8 text-[#80E9D4] border border-[#80E9D4]/20 group-hover:bg-[#80E9D4] group-hover:text-black transition-all">
+                            <span className="material-symbols-outlined text-3xl">trending_up</span>
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-4">The Results</h3>
+                        <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">{t('results')}</h3>
                         <p className="text-gray-400 leading-relaxed text-sm font-light">
-                            Achieved 94% accuracy in complex urban scenarios while providing verifiable explanations for 99% of critical maneuvers. The framework has been adopted by two major European automotive manufacturers for their next-gen prototypes.
+                            {data.results}
                         </p>
                     </div>
                 </div>

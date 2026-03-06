@@ -1,27 +1,55 @@
-const forms = [
-    { icon: 'record_voice_over', title: 'Guest Lectures', desc: 'Share industry insights, latest trends, and real-world case studies directly with our students to bridge the gap between theory and practice.' },
-    { icon: 'menu_book', title: 'Dual Education', desc: 'Combine academic studies with practical work experience at your company. Help tailor our curriculum to meet your specific technical needs.' },
-    { icon: 'hub', title: 'R&D Hub Sponsorship', desc: 'Invest in our laboratories and research hubs. Collaborate with faculty and top students on cutting-edge technological challenges.' },
-];
+import { useTranslations } from 'next-intl';
 
 export default function PartnershipForms() {
+    const t = useTranslations('PartnershipForms');
+
+    const icons = ['record_voice_over', 'menu_book', 'hub'];
+
     return (
-        <section className="w-full flex flex-col gap-12 py-8">
-            <div className="text-center max-w-2xl mx-auto">
-                <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">Forms of Partnership</h3>
-                <p className="text-gray-400 font-light leading-relaxed">Discover how we can collaborate to shape the future of technology and education.</p>
+        // ДОДАНО: rounded-[3rem], border border-white/5 та shadow-2xl для м'якості
+        <section className="w-full flex flex-col gap-16 py-16 bg-[#0A0A15] rounded-[3rem] border border-white/5 shadow-2xl shadow-primary/5">
+            {/* ДОДАНО: px-8, щоб текст не прилипав до країв заокругленої секції */}
+            <div className="text-center max-w-3xl mx-auto space-y-4 px-8 relative z-10">
+                <h3 className="text-4xl md:text-5xl font-bold tracking-tighter text-white animate-in fade-in slide-in-from-bottom-3 duration-700">
+                    {t('title')}
+                </h3>
+                <p className="text-gray-400 font-light leading-relaxed text-lg animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
+                    {t('description')}
+                </p>
+                <div className="w-20 h-1 gradient-bg mx-auto rounded-full opacity-50 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-200"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {forms.map((form, i) => (
-                    <div key={i} className="p-8 rounded-3xl glass-card border-white/5 flex flex-col items-start gap-4 hover:border-primary/40 transition-colors hover:-translate-y-1 duration-300">
-                        <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-2 border border-primary/20">
-                            <span className="material-symbols-outlined text-3xl">{form.icon}</span>
+            {/* ДОДАНО: px-8 для сітки */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-8 relative z-10">
+                {[0, 1, 2].map((index) => (
+                    <div
+                        key={index}
+                        className="group p-10 rounded-[2.5rem] glass-card border-white/5 bg-[#0F0F1A]/40 flex flex-col items-start gap-6 hover:border-primary/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(108,99,255,0.05)] relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-700"
+                        style={{ animationDelay: `${index * 150}ms` }}
+                    >
+                        {/* Декоративний градієнт при ховері */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                        {/* Контейнер іконки */}
+                        <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-2 border border-primary/20 group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-lg shadow-primary/5 relative z-10">
+                            <span className="material-symbols-outlined text-3xl transition-transform duration-500 group-hover:scale-110">
+                                {icons[index]}
+                            </span>
                         </div>
-                        <h4 className="text-xl font-bold text-white">{form.title}</h4>
-                        <p className="text-sm text-gray-400 font-light leading-relaxed">
-                            {form.desc}
-                        </p>
+
+                        <div className="space-y-4 relative z-10 flex-grow">
+                            <h4 className="text-2xl font-bold text-white tracking-tight group-hover:text-primary transition-colors duration-300">
+                                {t(`items.${index}.title`)}
+                            </h4>
+                            <p className="text-gray-400 font-light leading-relaxed text-sm md:text-base opacity-90 group-hover:opacity-100 transition-opacity">
+                                {t(`items.${index}.desc`)}
+                            </p>
+                        </div>
+
+                        {/* Стрілка-індикатор */}
+                        <div className="mt-auto pt-6 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-[-10px] group-hover:translate-x-0 relative z-10">
+                            <span className="material-symbols-outlined text-primary text-3xl">arrow_right_alt</span>
+                        </div>
                     </div>
                 ))}
             </div>

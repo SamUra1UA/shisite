@@ -1,53 +1,96 @@
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export default function ContactResources() {
+    const t = useTranslations('ContactResources');
+
+    const resources = [
+        {
+            href: "https://youtu.be/ng2SFLNYtj0",
+            icon: "play_circle",
+            color: "red",
+            title: t('youtube.title'),
+            desc: t('youtube.desc')
+        },
+        {
+            href: "https://linkedin.com/in/ai-lviv",
+            icon: "work",
+            color: "blue",
+            title: t('linkedin.title'),
+            desc: t('linkedin.desc')
+        },
+        {
+            href: "https://www.instagram.com/ai_lpnu",
+            icon: "camera",
+            color: "pink",
+            title: t('instagram.title'),
+            desc: t('instagram.desc')
+        },
+        {
+            href: "https://www.facebook.com/share/1A48b66KhS/",
+            icon: "groups",
+            color: "blue",
+            title: t('facebook.title'),
+            desc: t('facebook.desc')
+        },
+        {
+            href: "https://www.tiktok.com/@ai_lpnu",
+            icon: "grade",
+            color: "cyan",
+            title: t('tiktok.title'),
+            desc: t('tiktok.desc')
+        },
+        {
+            href: "https://huggingface.co/ai-department-lpnu", // Залишаємо заглушку для Hugging Face
+            customIcon: "🤗",
+            color: "yellow",
+            title: t('huggingface.title'),
+            desc: t('huggingface.desc'),
+            comingSoon: false
+        }
+    ];
+
     return (
-        <section className="py-24 bg-[#0F0F1A]">
-            <div className="max-w-4xl mx-auto px-8">
-                <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-white">Useful Resources</h2>
+        <section className="py-24 bg-[#0A0A15] border-t border-white/5">
+            <div className="max-w-5xl mx-auto px-8">
+                <h2 className="text-3xl md:text-5xl font-bold mb-16 text-center text-white tracking-tight">
+                    {t('title')}
+                </h2>
 
-                <div className="space-y-6">
-                    {/* YouTube */}
-                    <Link href="#" className="flex flex-col sm:flex-row sm:items-center justify-between p-6 rounded-2xl glass-card hover:border-primary/40 group transition-all border-white/5 gap-4">
-                        <div className="flex items-center gap-6">
-                            <div className="w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 flex-shrink-0">
-                                <span className="material-symbols-outlined text-3xl">play_circle</span>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {resources.map((res, i) => (
+                        <Link
+                            key={i}
+                            href={res.href}
+                            target={res.href !== "#" ? "_blank" : "_self"}
+                            className={`flex items-center justify-between p-6 rounded-3xl glass-card hover:border-primary/40 group transition-all duration-500 border-white/5 bg-[#0F0F1A]/40 ${res.comingSoon ? 'opacity-60 cursor-not-allowed' : ''}`}
+                        >
+                            <div className="flex items-center gap-6">
+                                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 text-3xl transition-all duration-500
+                                    ${res.color === 'red' ? 'bg-red-500/10 text-red-500 group-hover:bg-red-500 group-hover:text-white' : ''}
+                                    ${res.color === 'blue' ? 'bg-blue-600/10 text-blue-500 group-hover:bg-blue-600 group-hover:text-white' : ''}
+                                    ${res.color === 'pink' ? 'bg-pink-500/10 text-pink-500 group-hover:bg-pink-500 group-hover:text-white' : ''}
+                                    ${res.color === 'cyan' ? 'bg-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-white' : ''}
+                                    ${res.color === 'yellow' ? 'bg-yellow-500/10 text-yellow-500' : ''}
+                                `}>
+                                    {res.customIcon ? res.customIcon : <span className="material-symbols-outlined text-3xl">{res.icon}</span>}
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-lg text-white group-hover:text-primary transition-colors duration-300">
+                                        {res.title}
+                                    </h4>
+                                    <p className="text-xs md:text-sm text-gray-500 font-light leading-relaxed">
+                                        {res.desc}
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <h4 className="font-bold text-lg text-white group-hover:text-primary transition-colors">YouTube Channel</h4>
-                                <p className="text-sm text-gray-400 font-light">Lectures, webinars, and student projects</p>
-                            </div>
-                        </div>
-                        <span className="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors transform group-hover:translate-x-1 hidden sm:block">arrow_forward</span>
-                    </Link>
-
-                    {/* Hugging Face */}
-                    <Link href="#" className="flex flex-col sm:flex-row sm:items-center justify-between p-6 rounded-2xl glass-card hover:border-primary/40 group transition-all border-white/5 gap-4">
-                        <div className="flex items-center gap-6">
-                            <div className="w-14 h-14 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-2xl flex-shrink-0">
-                                🤗
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-lg text-white group-hover:text-primary transition-colors">Hugging Face Profile</h4>
-                                <p className="text-sm text-gray-400 font-light">Models and datasets created by our researchers</p>
-                            </div>
-                        </div>
-                        <span className="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors transform group-hover:translate-x-1 hidden sm:block">arrow_forward</span>
-                    </Link>
-
-                    {/* AI Digital Library */}
-                    <Link href="#" className="flex flex-col sm:flex-row sm:items-center justify-between p-6 rounded-2xl glass-card hover:border-primary/40 group transition-all border-white/5 gap-4">
-                        <div className="flex items-center gap-6">
-                            <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500 flex-shrink-0">
-                                <span className="material-symbols-outlined text-3xl">library_books</span>
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-lg text-white group-hover:text-primary transition-colors">AI Digital Library</h4>
-                                <p className="text-sm text-gray-400 font-light">Access to academic papers and department publications</p>
-                            </div>
-                        </div>
-                        <span className="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors transform group-hover:translate-x-1 hidden sm:block">arrow_forward</span>
-                    </Link>
+                            {!res.comingSoon && (
+                                <span className="material-symbols-outlined text-gray-600 group-hover:text-primary transition-all transform group-hover:translate-x-1">
+                                    arrow_forward
+                                </span>
+                            )}
+                        </Link>
+                    ))}
                 </div>
             </div>
         </section>

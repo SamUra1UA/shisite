@@ -13,7 +13,6 @@ export default function RndPage() {
         <main>
             <Navbar />
             <RndHero />
-            <ResearchUnits />
             <OngoingProjects />
             <Footer />
         </main>
